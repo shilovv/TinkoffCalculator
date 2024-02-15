@@ -46,6 +46,9 @@ class ViewController: UIViewController {
 
     @IBAction func buttonPressed(_ sender: UIButton) {
         guard let buttonText = sender.currentTitle else { return }
+        if buttonText == "," && isOperationChosen == true {
+            label.text = "0,"
+        }
         if buttonText == "," && label.text?.contains(",") == true {
             return
         }
@@ -71,14 +74,19 @@ class ViewController: UIViewController {
         else { return }
         
         calculationHistory.append(.number(labelNumber))
-        
-        do {
-            let result = try calculate()
-            label.text = numberFormatter.string(from: NSNumber(value: result))
-        } catch {
-            label.text = "Ошибка"
+        if calculationHistory.count < 3 {
+            label.text = "Неправильная операция"
+        }
+        else {
+            do {
+                let result = try calculate()
+                label.text = numberFormatter.string(from: NSNumber(value: result))
+            } catch {
+                label.text = "Ошибка"
+            }
         }
         calculationHistory.removeAll()
+        isOperationChosen = true
     }
     
     @IBAction func operationButtonPressed(_ sender: UIButton) {
