@@ -46,14 +46,14 @@ class ViewController: UIViewController {
 
     @IBAction func buttonPressed(_ sender: UIButton) {
         guard let buttonText = sender.currentTitle else { return }
-        if buttonText == "," && isOperationChosen == true {
+        if buttonText == "," && (label.text == "Ошибка" || label.text == "0") {
             label.text = "0,"
         }
         if buttonText == "," && label.text?.contains(",") == true {
             return
         }
         
-        if label.text == "0" || isOperationChosen == true {
+        if label.text == "0" || label.text == "Ошибка" || isOperationChosen == true {
             label.text = buttonText
         }
         else {

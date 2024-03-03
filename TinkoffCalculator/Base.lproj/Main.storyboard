@@ -312,6 +312,33 @@
             </objects>
             <point key="canvasLocation" x="-65" y="4"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="Fca-aH-OjM">
+            <objects>
+                <viewController id="vUr-AI-f8w" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="GeN-PJ-sa9">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="История вычислений" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pgU-DK-HTk">
+                                <rect key="frame" x="111.66666666666669" y="415.66666666666669" width="170" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="Xcs-wd-TbI"/>
+                        <color key="backgroundColor" systemColor="systemGray2Color"/>
+                        <constraints>
+                            <constraint firstItem="pgU-DK-HTk" firstAttribute="centerY" secondItem="GeN-PJ-sa9" secondAttribute="centerY" id="5md-xs-Lft"/>
+                            <constraint firstItem="pgU-DK-HTk" firstAttribute="centerX" secondItem="GeN-PJ-sa9" secondAttribute="centerX" id="xTG-qk-HkY"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RQX-2e-TvK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="956" y="4"/>
+        </scene>
     </scenes>
     <resources>
         <namedColor name="AccentColor">
@@ -319,6 +346,9 @@
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGray2Color">
+            <color red="0.68235294117647061" green="0.68235294117647061" blue="0.69803921568627447" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
