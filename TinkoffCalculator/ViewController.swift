@@ -42,6 +42,8 @@ enum CalculationHistoryItem {
     case operation(Operation)
 }
 
+var lastResult: String?
+
 class ViewController: UIViewController {
 
     @IBAction func buttonPressed(_ sender: UIButton) {
@@ -81,6 +83,7 @@ class ViewController: UIViewController {
             do {
                 let result = try calculate()
                 label.text = numberFormatter.string(from: NSNumber(value: result))
+                lastResult = label.text
             } catch {
                 label.text = "Ошибка"
             }
@@ -106,6 +109,11 @@ class ViewController: UIViewController {
         //resetLabelText()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: false)
+    }
+    
     lazy var numberFormatter: NumberFormatter = {
         let numberFormatter = NumberFormatter()
         
@@ -128,6 +136,17 @@ class ViewController: UIViewController {
         resetLabelText()
     }
     
+    @IBAction func showCalculationsList(_ sender: Any) {
+        let sb = UIStoryboard(name: "Main", bundle: nil)
+        let calculationsListVC = sb.instantiateViewController(identifier: "CalculationsListViewController")
+        if let vc = calculationsListVC as? CalculationsListViewController {
+            if lastResult != nil { vc.result = lastResult }
+            else { vc.result = "NoData"}
+        }
+        
+        navigationController?.pushViewController(calculationsListVC, animated: true)
+    }
+    
     func calculate() throws -> Double {
         guard case .number(let firstNumber) = calculationHistory[0] else { return 0 }
         
@@ -140,7 +159,7 @@ class ViewController: UIViewController {
             
             currentResult = try operation.calculate(currentResult, number)
         }
-                
+        
         return currentResult
     }
     
