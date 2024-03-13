@@ -46,6 +46,15 @@ var lastResult: String?
 
 class ViewController: UIViewController {
 
+    var calculations: [(expression: [CalculationHistoryItem], result: Double)] = []
+    
+    @IBOutlet weak var label: UILabel!
+    @IBOutlet var historyButton: UIButton!
+    
+    var isOperationChosen: Bool = false
+    
+    var calculationHistory: [CalculationHistoryItem] = []
+    
     @IBAction func buttonPressed(_ sender: UIButton) {
         guard let buttonText = sender.currentTitle else { return }
         if buttonText == "," && (label.text == "Ошибка" || label.text == "0") {
@@ -83,6 +92,7 @@ class ViewController: UIViewController {
             do {
                 let result = try calculate()
                 label.text = numberFormatter.string(from: NSNumber(value: result))
+                calculations.append((calculationHistory, result))
                 lastResult = label.text
             } catch {
                 label.text = "Ошибка"
@@ -123,25 +133,21 @@ class ViewController: UIViewController {
         return numberFormatter
     }()
     
-    @IBOutlet weak var label: UILabel!
     
-    var isOperationChosen: Bool = false
-    
-    var calculationHistory: [CalculationHistoryItem] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
         resetLabelText()
+        historyButton.accessibilityIdentifier = "historyButton"
     }
     
     @IBAction func showCalculationsList(_ sender: Any) {
         let sb = UIStoryboard(name: "Main", bundle: nil)
         let calculationsListVC = sb.instantiateViewController(identifier: "CalculationsListViewController")
         if let vc = calculationsListVC as? CalculationsListViewController {
-            if lastResult != nil { vc.result = lastResult }
-            else { vc.result = "NoData"}
+            vc.calculations = calculations
         }
         
         navigationController?.pushViewController(calculationsListVC, animated: true)

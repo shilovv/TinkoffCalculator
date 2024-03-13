@@ -324,6 +324,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Калькулятор" id="YZP-1I-ECg"/>
                     <connections>
+                        <outlet property="historyButton" destination="7At-lF-qVI" id="kVY-nB-hL0"/>
                         <outlet property="label" destination="PDu-CB-4h1" id="XkU-Ec-wUI"/>
                     </connections>
                 </viewController>
@@ -339,46 +340,23 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pgU-DK-HTk">
-                                <rect key="frame" x="196.66666666666666" y="470.66666666666669" width="0.0" height="0.0"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dlN-I8-Yaw">
-                                <rect key="frame" x="151" y="531.66666666666663" width="91" height="35"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="35" id="9i7-hr-zue"/>
-                                </constraints>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="Закрыть"/>
-                                <connections>
-                                    <action selector="dismissVC:" destination="vUr-AI-f8w" eventType="touchUpInside" id="Np5-Rr-5GC"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Результат" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YZr-X2-aYk">
-                                <rect key="frame" x="157" y="426.33333333333331" width="79" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="we8-iz-dAF">
+                                <rect key="frame" x="0.0" y="59" width="393" height="759"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Xcs-wd-TbI"/>
                         <color key="backgroundColor" systemColor="systemGray2Color"/>
                         <constraints>
-                            <constraint firstItem="dlN-I8-Yaw" firstAttribute="centerX" secondItem="GeN-PJ-sa9" secondAttribute="centerX" id="8KW-cU-Zal"/>
-                            <constraint firstItem="dlN-I8-Yaw" firstAttribute="top" secondItem="pgU-DK-HTk" secondAttribute="bottom" constant="61" id="9hJ-UV-eTq"/>
-                            <constraint firstItem="YZr-X2-aYk" firstAttribute="centerX" secondItem="GeN-PJ-sa9" secondAttribute="centerX" id="Epg-8C-zAB"/>
-                            <constraint firstItem="pgU-DK-HTk" firstAttribute="centerX" secondItem="GeN-PJ-sa9" secondAttribute="centerX" id="Tx2-0Z-CBg"/>
-                            <constraint firstItem="pgU-DK-HTk" firstAttribute="top" secondItem="YZr-X2-aYk" secondAttribute="bottom" constant="23.333333333333314" id="Up8-hR-20G"/>
-                            <constraint firstItem="pgU-DK-HTk" firstAttribute="centerX" secondItem="dlN-I8-Yaw" secondAttribute="centerX" id="Ywo-3D-atd"/>
-                            <constraint firstItem="dlN-I8-Yaw" firstAttribute="centerX" secondItem="GeN-PJ-sa9" secondAttribute="centerX" id="aQP-8J-31h"/>
-                            <constraint firstItem="Xcs-wd-TbI" firstAttribute="bottom" secondItem="dlN-I8-Yaw" secondAttribute="bottom" constant="251.33333333333331" id="tfi-Wp-cFl"/>
+                            <constraint firstItem="Xcs-wd-TbI" firstAttribute="bottom" secondItem="we8-iz-dAF" secondAttribute="bottom" id="CoP-Hx-7ZX"/>
+                            <constraint firstItem="we8-iz-dAF" firstAttribute="leading" secondItem="GeN-PJ-sa9" secondAttribute="leading" id="OKy-Gm-E4S"/>
+                            <constraint firstAttribute="trailing" secondItem="we8-iz-dAF" secondAttribute="trailing" id="SMp-bq-84N"/>
+                            <constraint firstItem="we8-iz-dAF" firstAttribute="top" secondItem="Xcs-wd-TbI" secondAttribute="top" id="c65-BW-v6R"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Прошлые вычисления" id="daY-sg-rDm"/>
                     <connections>
-                        <outlet property="calculationLabel" destination="pgU-DK-HTk" id="kvo-2a-Cc5"/>
+                        <outlet property="tableView" destination="we8-iz-dAF" id="5xs-C0-u4x"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RQX-2e-TvK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
