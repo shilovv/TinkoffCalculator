@@ -39,6 +39,15 @@ class CalculationsListViewController: UIViewController {
         tableView.backgroundColor = UIColor.systemGray5
         let tableHeaderView = UIView()
         tableHeaderView.frame = CGRect(x: 0, y: 0, width: tableView.bounds.width, height: 30)
+        tableHeaderView.backgroundColor = UIColor.systemGreen
+        let label = UILabel()
+        label.frame = CGRect.init(x: 10, y: 0, width: tableHeaderView.frame.width-10, height: tableHeaderView.frame.height)
+        label.text = Date().toString(dateFormat: "dd.MM.yyyy")
+        label.font = .systemFont(ofSize: 16)
+        label.textColor = .yellow
+        
+        tableHeaderView.addSubview(label)
+        
         tableView.tableHeaderView = tableHeaderView
         tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 1)) //заполняем сплошным цветом tableView внизу
         
@@ -79,10 +88,7 @@ extension Date {
 }
 
 extension CalculationsListViewController: UITableViewDelegate {
-    //func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {}
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return Date().toString(dateFormat: "dd.MM.yyyy")
-    }
+      
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 90.0
     }
@@ -100,7 +106,6 @@ extension CalculationsListViewController: UITableViewDataSource {
         }
         return numberOfSections
     }*/
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         /*if calculations.count == 0 { return 0 }
         
