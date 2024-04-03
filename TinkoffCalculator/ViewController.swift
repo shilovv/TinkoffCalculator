@@ -95,7 +95,7 @@ class ViewController: UIViewController {
                 label.text = numberFormatter.string(from: NSNumber(value: result))
                 let newCalculation = Calculation(expression: calculationHistory, result: result, date: Date())
                 calculations.append(newCalculation)
-                calculationHistoryStorage.setHistory(calculation: calculations)
+                //calculationHistoryStorage.setHistory(calculation: calculations)
                 lastResult = label.text
             } catch {
                 label.text = "Ошибка"
@@ -143,7 +143,7 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view.
         
         resetLabelText()
-        calculations = calculationHistoryStorage.loadHistory()
+        //calculations = calculationHistoryStorage.loadHistory()
         historyButton.accessibilityIdentifier = "historyButton"
     }
     
