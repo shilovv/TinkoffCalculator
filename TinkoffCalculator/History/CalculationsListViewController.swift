@@ -9,7 +9,7 @@ import UIKit
 
 class CalculationsListViewController: UIViewController {
     
-    var calculations: [(expression: [CalculationHistoryItem], result: Double)] = []
+    var calculations: [Calculation] = []
     
     @IBOutlet weak var calculationLabel: UILabel!
     @IBOutlet weak var tableView: UITableView!
@@ -37,9 +37,9 @@ class CalculationsListViewController: UIViewController {
         tableView.dataSource = self
         
         tableView.backgroundColor = UIColor.systemGray5
-        let tableHeaderView = UIView()
+        /*let tableHeaderView = UIView()
         tableHeaderView.frame = CGRect(x: 0, y: 0, width: tableView.bounds.width, height: 30)
-        tableHeaderView.backgroundColor = UIColor.systemGreen
+        tableHeaderView.backgroundColor = UIColor.systemGray5
         let label = UILabel()
         label.frame = CGRect.init(x: 10, y: 0, width: tableHeaderView.frame.width-10, height: tableHeaderView.frame.height)
         label.text = Date().toString(dateFormat: "dd.MM.yyyy")
@@ -48,7 +48,7 @@ class CalculationsListViewController: UIViewController {
         
         tableHeaderView.addSubview(label)
         
-        tableView.tableHeaderView = tableHeaderView
+        tableView.tableHeaderView = tableHeaderView*/
         tableView.tableFooterView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 1)) //заполняем сплошным цветом tableView внизу
         
         let nib = UINib(nibName: "HistoryTableViewCell", bundle: nil)
@@ -88,24 +88,19 @@ extension Date {
 }
 
 extension CalculationsListViewController: UITableViewDelegate {
-      
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return calculations[section].date.toString(dateFormat: "dd.MM.yyyy")
+    }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 90.0
     }
 }
 
 extension CalculationsListViewController: UITableViewDataSource {
-    /*func tableView(_ tableView: UITableView, numberOfSectionsInTableView number: Int) -> Int {
-        if calculations.count == 0 { return 0 }
-        let corrDate: Date = calculations[0].date
-        var numberOfSections: Int = 1
-        for element in calculations {
-            if element.date != corrDate {
-                numberOfSections += 1
-            }
-        }
-        return numberOfSections
-    }*/
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return calculations.count
+    }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         /*if calculations.count == 0 { return 0 }
         
@@ -115,12 +110,13 @@ extension CalculationsListViewController: UITableViewDataSource {
         for index in 1...calculations.count - 1 {
             if
         }*/
-        return calculations.count
+        return 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "HistoryTableViewCell", for: indexPath) as! HistoryTableViewCell
-        let historyItem = calculations[indexPath.row]
+        let value = indexPath.row
+        let historyItem = calculations[indexPath.section]
                
         cell.configure(with: expressionToString(historyItem.expression), result: String(historyItem.result))
         return cell

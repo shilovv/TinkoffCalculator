@@ -46,15 +46,16 @@ var lastResult: String?
 
 class ViewController: UIViewController {
 
-    var calculations: [(expression: [CalculationHistoryItem], result: Double)] = []
+    var calculationHistory: [CalculationHistoryItem] = []
+    var calculations: [Calculation] = []
+    
+    let calculationHistoryStorage = CalculationHistoryStorage()
     
     @IBOutlet weak var label: UILabel!
     @IBOutlet var historyButton: UIButton!
     
     var isOperationChosen: Bool = false
-    
-    var calculationHistory: [CalculationHistoryItem] = []
-    
+        
     @IBAction func buttonPressed(_ sender: UIButton) {
         guard let buttonText = sender.currentTitle else { return }
         if buttonText == "," && (label.text == "Ошибка" || label.text == "0") {
@@ -92,7 +93,9 @@ class ViewController: UIViewController {
             do {
                 let result = try calculate()
                 label.text = numberFormatter.string(from: NSNumber(value: result))
-                calculations.append((calculationHistory, result))
+                let newCalculation = Calculation(expression: calculationHistory, result: result, date: Date())
+                calculations.append(newCalculation)
+                calculationHistoryStorage.setHistory(calculation: calculations)
                 lastResult = label.text
             } catch {
                 label.text = "Ошибка"
@@ -140,6 +143,7 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view.
         
         resetLabelText()
+        calculations = calculationHistoryStorage.loadHistory()
         historyButton.accessibilityIdentifier = "historyButton"
     }
     
