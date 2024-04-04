@@ -44,10 +44,51 @@ enum CalculationHistoryItem {
 
 var lastResult: String?
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, LongPressViewProtocol {
+    var shared: UIView = {
+        let screenBounds = UIScreen.main.bounds
+        let alertHeight: CGFloat = 100
+        let alertWidth: CGFloat = screenBounds.width - 40
+        let x: CGFloat = screenBounds.width / 2 - alertWidth / 2
+        let y: CGFloat = screenBounds.height / 2 - alertHeight / 2
+        let sharedFrame = CGRect(x: x, y: y, width: alertWidth, height: alertHeight)
+        let shared = UIView(frame: sharedFrame)
+        return shared
+    }()
+    
+    func startAnimation() {
+        if !view.contains(shared) {
+            
+            view.addSubview(shared)
+        }
+        shared.alpha = 1
+        shared.center = view.center
+        animateRect()
+    }
+    
+    func stopAnimation() {
+        shared.removeFromSuperview()
+    }
+    
+
 
     var calculationHistory: [CalculationHistoryItem] = []
     var calculations: [Calculation] = []
+    
+    
+    
+    private let alertView: AlertView = {
+        let screenBounds = UIScreen.main.bounds
+        let alertHeight: CGFloat = 100
+        let alertWidth: CGFloat = screenBounds.width - 40
+        let x: CGFloat = screenBounds.width / 2 - alertWidth / 2
+        let y: CGFloat = screenBounds.height / 2 - alertHeight / 2
+        let alertFrame = CGRect(x: x, y: y, width: alertWidth, height: alertHeight)
+        let alertView = AlertView(frame: alertFrame)
+        return alertView
+    }()
+    
+    //private let longPressView: LongPress = LongPress(AlertView)
     
     let calculationHistoryStorage = CalculationHistoryStorage()
     
@@ -72,7 +113,13 @@ class ViewController: UIViewController {
             label.text?.append(buttonText)
         }
         
+        if label.text == "3,141592" {
+            animateAlert()
+        }
+        
         isOperationChosen = false
+        
+        sender.animateTap()
     }
     
     @IBAction func clearButtonPressed() {
@@ -99,10 +146,13 @@ class ViewController: UIViewController {
                 lastResult = label.text
             } catch {
                 label.text = "Ошибка"
+                label.shake()
             }
         }
         calculationHistory.removeAll()
         isOperationChosen = true
+        
+        //animateBackground()
     }
     
     @IBAction func operationButtonPressed(_ sender: UIButton) {
@@ -143,10 +193,42 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view.
         
         resetLabelText()
+        
+        view.addSubview(alertView)
+        alertView.alpha = 0
+        alertView.alertText = "Вы нашли пасхалку!"
+        
+        view.subviews.forEach {
+            if type(of: $0) == UIButton.self {
+                $0.layer.cornerRadius = 45
+                //$0.layer.borderWidth -= 10
+            }
+        }
+        
+        view.addSubview(shared)
+        shared.alpha = 0
+        shared.layer.cornerRadius = 30
+        shared.backgroundColor = .red
+        
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(longPressEvent(sender:)))
+        longPress.minimumPressDuration = 1.0
+        view.addGestureRecognizer(longPress)
+        
         calculations = calculationHistoryStorage.loadHistory()
         historyButton.accessibilityIdentifier = "historyButton"
     }
     
+    @objc func longPressEvent(sender: UILongPressGestureRecognizer) {
+        switch sender.state {
+        case .began:
+            startAnimation()
+        case .ended:
+            stopAnimation()
+        @unknown default:
+            stopAnimation()
+        }
+    }
+                                                     
     @IBAction func showCalculationsList(_ sender: Any) {
         let sb = UIStoryboard(name: "Main", bundle: nil)
         let calculationsListVC = sb.instantiateViewController(identifier: "CalculationsListViewController")
@@ -176,5 +258,80 @@ class ViewController: UIViewController {
     func resetLabelText() {
         label.text = "0"
     }
+    
+    func animateAlert() {
+        if !view.contains(alertView) {
+            alertView.alpha = 0
+            alertView.center = view.center
+            view.addSubview(alertView)
+        }
+        
+        UIView.animateKeyframes(withDuration: 2.0, delay: 0.5) {
+            UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 0.5) {
+                self.alertView.alpha = 1
+            }
+            
+            UIView.addKeyframe(withRelativeStartTime: 0.5, relativeDuration: 0.5) {
+                var newCenter = self.label.center
+                newCenter.y -= self.alertView.bounds.height
+                self.alertView.center = newCenter
+            }
+        }
+    }
+    
+    func animateBackground() {
+        let animation = CABasicAnimation(keyPath: "backgroundColor")
+        animation.duration = 1
+        animation.fromValue = UIColor.white.cgColor
+        animation.toValue = UIColor.blue.cgColor
+        
+        view.layer.add(animation, forKey: "backgroundColor")
+        view.layer.backgroundColor = UIColor.blue.cgColor
+    }
+    
+    func animateRect() {
+        
+        
+        let animation = CABasicAnimation(keyPath: "backgroundColor")
+        animation.autoreverses = true
+        animation.duration = 1
+        animation.repeatCount = 60
+        animation.fromValue = UIColor.red.cgColor
+        animation.toValue = UIColor.blue.cgColor
+        
+        shared.layer.add(animation, forKey: "backgroundColor")
+    }
 }
+
+extension UILabel {
+    func shake() {
+        let animation = CABasicAnimation(keyPath: "position")
+        animation.duration = 0.05
+        animation.repeatCount = 5
+        animation.autoreverses = true
+        animation.fromValue = NSValue(cgPoint: CGPoint(x: center.x - 5, y: center.y))
+        animation.toValue = NSValue(cgPoint: CGPoint(x: center.x + 5, y: center.y))
+        
+        layer.add(animation, forKey: "position")
+    }
+}
+
+extension UIButton {
+    func animateTap() {
+        let scaleAnimation = CAKeyframeAnimation(keyPath: "transform.scale")
+        scaleAnimation.values = [1, 0.9, 1]
+        scaleAnimation.keyTimes = [0, 0.2, 1]
+        
+        let opacityAnimation = CAKeyframeAnimation(keyPath: "opacity")
+        opacityAnimation.values = [0.4, 0.8, 1]
+        opacityAnimation.keyTimes = [0, 0.2, 1]
+        
+        let animationGroup = CAAnimationGroup()
+        animationGroup.duration = 1.5
+        animationGroup.animations = [scaleAnimation, opacityAnimation]
+        
+        layer.add(animationGroup, forKey: "groupAnimation")
+    }
+}
+
 

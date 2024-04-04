@@ -11,6 +11,7 @@
 		8E9785782BA095CC007990DC /* HistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E9785772BA095CC007990DC /* HistoryTableViewCell.swift */; };
 		8E97857A2BA096E1007990DC /* HistoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8E9785792BA096E1007990DC /* HistoryTableViewCell.xib */; };
 		8E97857D2BBD3C71007990DC /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E97857C2BBD3C71007990DC /* Storage.swift */; };
+		8E97857F2BBD7643007990DC /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E97857E2BBD7643007990DC /* AlertView.swift */; };
 		8EFC73072B7641FD00EC5E92 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EFC73062B7641FD00EC5E92 /* AppDelegate.swift */; };
 		8EFC73092B7641FD00EC5E92 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EFC73082B7641FD00EC5E92 /* SceneDelegate.swift */; };
 		8EFC730B2B7641FD00EC5E92 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8EFC730A2B7641FD00EC5E92 /* ViewController.swift */; };
@@ -44,6 +45,7 @@
 		8E9785772BA095CC007990DC /* HistoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTableViewCell.swift; sourceTree = "<group>"; };
 		8E9785792BA096E1007990DC /* HistoryTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HistoryTableViewCell.xib; sourceTree = "<group>"; };
 		8E97857C2BBD3C71007990DC /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
+		8E97857E2BBD7643007990DC /* AlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		8EFC73032B7641FD00EC5E92 /* TinkoffCalculator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TinkoffCalculator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8EFC73062B7641FD00EC5E92 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8EFC73082B7641FD00EC5E92 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -105,6 +107,7 @@
 		8EFC72FA2B7641FD00EC5E92 = {
 			isa = PBXGroup;
 			children = (
+				8E97857E2BBD7643007990DC /* AlertView.swift */,
 				8EFC73052B7641FD00EC5E92 /* TinkoffCalculator */,
 				8EFC731C2B7641FF00EC5E92 /* TinkoffCalculatorTests */,
 				8EFC73262B7641FF00EC5E92 /* TinkoffCalculatorUITests */,
@@ -289,6 +292,7 @@
 			files = (
 				8E5592FD2B7F2DA300B71F47 /* CalculationsListViewController.swift in Sources */,
 				8EFC730B2B7641FD00EC5E92 /* ViewController.swift in Sources */,
+				8E97857F2BBD7643007990DC /* AlertView.swift in Sources */,
 				8EFC73072B7641FD00EC5E92 /* AppDelegate.swift in Sources */,
 				8EFC73092B7641FD00EC5E92 /* SceneDelegate.swift in Sources */,
 				8E9785782BA095CC007990DC /* HistoryTableViewCell.swift in Sources */,
